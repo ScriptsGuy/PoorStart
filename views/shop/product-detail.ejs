@@ -1,0 +1,23 @@
+<%- include('../includes/head.ejs') %>
+
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+
+    <div class="container-fluid bg-light py-3">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="card card-body">
+                    <img class="card-img-top" src="<%= product.imageUrl %>"  alt="<%= product.name %>">
+                   <h1><%= product.name %><span class="badge   badge-dark " style="font-size: 50%"><%= product.productType %></span></h1> 
+                   <h3><span class="badge badge-pill  badge-warning ">DZD<%= product.price %></span></h3>
+                   <hr>
+                   <p><%= product.description %> </p>
+                <%- include('../includes/add-to-cart.ejs') %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../includes/end.ejs') %> 

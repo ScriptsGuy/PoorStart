@@ -50,42 +50,43 @@
             </a>
           </div>
 
-           <div class="row">
+          <div class="row">
             <% if (prods.length > 0) { %>
-               <% for( let product of prods ) { %>
+            <% for( let product of prods ) { %>
             <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card h-100">
-                  <a href="#"><img class="card-img-top" src="<%= product.imageUrl %>" alt="<%= product.name %>"></a>
-                     <div class="card-body">
-                          <h4 class="card-title"><%= product.name %> </h4>
-                           <h5>$<%= product.price %></h5>
-                          <p class="card-text"><%= product.description %></p>
-                         <a href="#" class="btn btn-primary">Details</a>
-                     </div>
-                     <div class="card-footer">
-                        <small class="text-muted"><%= product.productType %></small>
-                    </div>
-                  </div>
+              <div class="card h-100">
+                <a href="#"><img class="card-img-top" src="<%= product.imageUrl %>" alt="<%= product.name %>"></a>
+                <div class="card-body">
+                  <h4 class="card-title">
+                    <%= product.name %>
+                  </h4>
+                  <h5>$
+                    <%= product.price %>
+                  </h5>
+                  <p class="card-text">
+                    <%= product.description %>
+                  </p>
+                  <a href="/products/<%= product.id %>" class="btn btn-primary">Details</a>
+                  <%- include('../includes/add-to-cart.ejs', {product: product}) %>
+                </div>
+                <div class="card-footer">
+                  <small class="text-muted">
+                    <%= product.productType %></small>
+                </div>
               </div>
-              <% } %>
+            </div>
+            <% } %>
             <% } else { %>
-              <h1>No Product Found!</h1>
-            <% } %> 
-         
-          
-
-            
-        
-                    
-
-          <!-- /.row -->
-
-        </div>
+            <h1>No Product Found!</h1>
+            <% } %>
+          <!-- /.row -->      
+          </div>
         <!-- /.col-lg-9 -->
-
       </div>
       <!-- /.row -->
 
-    </div>
+      </div>
+    </div>  
 
-      <%- include('../includes/end.ejs') %> 
+<%- include('../includes/footer.ejs') %> 
+ <%- include('../includes/end.ejs') %> 
