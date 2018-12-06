@@ -58,7 +58,7 @@
                   <a href="#"><img class="card-img-top" src="<%= product.imageUrl %>" alt="<%= product.name %>"></a>
                      <div class="card-body">
                           <h4 class="card-title"><%= product.name %> </h4>
-                           <h5>$<%= product.price %></h5>
+                           <h5><span class="badge badge-pill  badge-warning ">DZD <%= product.price %></span></h5>
                           <p class="card-text"><%= product.description %></p>
                          <a href="/products/<%= product.id %>" class="btn btn-primary">Details</a>
                         <%- include('../includes/add-to-cart.ejs', {product: product}) %>

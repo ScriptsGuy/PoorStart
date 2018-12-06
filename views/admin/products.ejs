@@ -4,25 +4,18 @@
 
 <body>
   <%- include('../includes/navigation.ejs') %>
-
   <div class="container">
-
     <div class="row">
-
       <div class="col-lg-3">
-
         <h1 class="my-4">Shop Name</h1>
         <div class="list-group">
           <a href="#" class="list-group-item">Category 1</a>
           <a href="#" class="list-group-item">Category 2</a>
           <a href="#" class="list-group-item">Category 3</a>
         </div>
-
       </div>
       <!-- /.col-lg-3 -->
-
       <div class="col-lg-9">
-
         <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
           <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -49,7 +42,6 @@
             <span class="sr-only">Next</span>
           </a>
         </div>
-
         <div class="row">
           <% if (prods.length > 0) { %>
           <% for( let product of prods ) { %>
@@ -67,11 +59,9 @@
                   <%= product.description %>
                 </p>
                 <a href="/admin/edit-product/<%= product.id %>?edit=true" class="btn btn-primary">Edit</a>
-
                 <form method="POST" action="/admin/delete-product">
                   <a href="#" class="btn btn-primary" type="submit">Delete</a>
                 </form>
-                  
               </div>
               <div class="card-footer">
                 <small class="text-muted">
@@ -83,17 +73,13 @@
           <% } else { %>
           <h1>No Product Found!</h1>
           <% } %>
-
           <!-- /.row -->
-
         </div>
         <!-- /.col-lg-9 -->
-
       </div>
       <!-- /.row -->
+    </div>
+  </div>
 
-    </div>
-    </div>
-    
-<%- include('../includes/footer.ejs') %> 
-    <%- include('../includes/end.ejs') %>
+  <%- include('../includes/footer.ejs') %>
+  <%- include('../includes/end.ejs') %>
