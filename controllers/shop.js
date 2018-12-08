@@ -1,4 +1,5 @@
 const Product = require('../models/product');
+const WishList = require('../models/wishlist');
 
 exports.getProducts = (req, res, next) => {
   // eslint-disable-next-line prefer-destructuring
@@ -24,10 +25,10 @@ exports.getProduct = (req, res) => {
   });
 };
 
-exports.postCart = (req, res) => {
+exports.postWishlist = (req, res) => {
   const prodId = req.body.productId;
-  console.log(prodId);
-  res.redirect('/cart');
+  // console.log(prodId);
+  res.redirect('/wishlist');
 };
 
 exports.getIndex = (req, res, next) => {
@@ -42,12 +43,21 @@ exports.getIndex = (req, res, next) => {
   });
 };
 
-exports.getCart = (req, res, next) => {
-  res.render('shop/cart', {
-    path: '/cart',
-    pageTitle: 'Your Cart',
+exports.getWishlist = (req, res, next) => {
+  res.render('shop/wishlist', {
+    path: '/wishlist',
+    pageTitle: 'Your Wishlist',
   });
 };
+
+exports.postWishList = (req, res) => {
+  const prodId = req.body.productId;
+  Product.findById(prodId, (product) => {
+    WishList.addProduct(prodId, product.price);
+  });
+  res.redirect('/wishlist');
+};
+
 exports.getOrders = (req, res, next) => {
   res.render('shop/orders', {
     path: '/orders',

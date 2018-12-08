@@ -47,7 +47,7 @@
           <% for( let product of prods ) { %>
           <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="<%= product.imageUrl %>" alt="<%= product.name %>"></a>
+              <a href="#"><img class="card-img-top" src="<%= product.imageUrl %>" alt="<%= product.name %>" style=" width: 100%; height: 200px; object-fit: cover;" ></a>
               <div class="card-body">
                 <h4 class="card-title">
                   <%= product.name %>
@@ -55,13 +55,19 @@
                 <h5>$
                   <%= product.price %>
                 </h5>
-                <p class="card-text">
+                <!-- <p class="card-text">
                   <%= product.description %>
-                </p>
-                <a href="/admin/edit-product/<%= product.id %>?edit=true" class="btn btn-primary">Edit</a>
-                <form method="POST" action="/admin/delete-product">
-                  <a href="#" class="btn btn-primary" type="submit">Delete</a>
+                </p> -->
+                <hr>
+                <form method="POST" action="/admin/delete-product" style="margin-left: 15px;">
+                  <div class="row">
+                    <div class="col-xs-4"><a href="/admin/edit-product/<%= product.id %>?edit=true" class="btn btn-success">Edit</a></div>
+                    <div class="col-xs-4" style="padding-left: 7px;"><input type="hidden" value="<%= product.id %>"
+                        name="productId">
+                      <button class="btn btn-danger" type="submit">Delete</button></div>
+                  </div>
                 </form>
+
               </div>
               <div class="card-footer">
                 <small class="text-muted">

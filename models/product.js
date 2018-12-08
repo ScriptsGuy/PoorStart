@@ -48,6 +48,18 @@ module.exports = class Product {
     });
   }
 
+  static deleteById(id) {
+    getProductsFromFile((products) => {
+      // eslint-disable-next-line no-shadow
+      const updatedProducts = products.filter((prodId) => prodId.id !== id);
+      fs.writeFile(dataPath, JSON.stringify(updatedProducts), (err) => {
+        if (!err) {
+          console.log('product deleted!!!');
+        }
+      });
+    });
+  }
+
   static fetchAll(cb) {
     getProductsFromFile(cb);
   }

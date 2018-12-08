@@ -47,7 +47,9 @@ exports.getEditProduct = (req, res, next) => {
       // eslint-disable-next-line object-shorthand
       product: product,
     });
+    return true;
   });
+  return true;
 };
 exports.postEditProduct = (req, res, next) => {
   const prodId = req.body.productId;
@@ -72,11 +74,16 @@ exports.postEditProduct = (req, res, next) => {
 exports.getProducts = (req, res, next) => {
   // eslint-disable-next-line prefer-destructuring
   Product.fetchAll((products) => {
-    // console.log(produ cts);
     res.render('admin/products', {
       prods: products,
       pageTitle: 'admin products',
       path: '/admin/products',
     });
   });
+};
+
+exports.postDeleteProduct = (req, res) => {
+  const prodId = req.body.productId;
+  Product.deleteById(prodId);
+  res.redirect('/');
 };
