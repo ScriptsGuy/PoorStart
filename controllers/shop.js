@@ -25,11 +25,6 @@ exports.getProduct = (req, res) => {
   });
 };
 
-exports.postWishlist = (req, res) => {
-  const prodId = req.body.productId;
-  // console.log(prodId);
-  res.redirect('/wishlist');
-};
 
 exports.getIndex = (req, res, next) => {
   // eslint-disable-next-line prefer-destructuring
@@ -44,9 +39,21 @@ exports.getIndex = (req, res, next) => {
 };
 
 exports.getWishlist = (req, res, next) => {
-  res.render('shop/wishlist', {
-    path: '/wishlist',
-    pageTitle: 'Your Wishlist',
+  WishList.getWishList((wishList) => {
+    Product.fetchAll((products) => {
+      const cartProducts = [];
+      for (product of products) {
+        const cartProductData = wishList.products.find((prod) => prod.id === product.id);
+        if (cartProductData) {
+          cartProducts.push({ productData: product, qty: cartProductData.qty });
+        }
+      }
+      res.render('shop/wishlist', {
+        path: '/wishList',
+        pageTitle: 'Your Cart',
+        products: cartProducts,
+      });
+    });
   });
 };
 
@@ -56,6 +63,14 @@ exports.postWishList = (req, res) => {
     WishList.addProduct(prodId, product.price);
   });
   res.redirect('/wishlist');
+};
+
+exports.postWishListDelete = (req, res, next) => {
+  const prodId = req.body.productId;
+  Product.findById(prodId, (product) => {
+    WishList.deleteProduct(prodId, product.price);
+    res.redirect('/wishlist');
+  });
 };
 
 exports.getOrders = (req, res, next) => {

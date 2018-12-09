@@ -1,16 +1,18 @@
 <%- include('../includes/head.ejs') %> 
 </head>
   <style>
-    .margin50 {
-      margin-top: 50px;
-    }
+    .mtopbottom{
+    margin-top: 50px;
+    margin-bottom: 100px;
+  }
+
   </style>
   <body>
     <%- include('../includes/navigation.ejs') %> 
     <div class="container-fluid bg-light py-3">
         <div class="row">
-            <div class="col-md-6 mx-auto">
-                <div class="card card-body">
+            <div class="col-md-6 mx-auto mtopbottom ">
+                <div class="card card-body shadow">
                     <h3 class="text-center mb-4">Add Product</h3>
                     <form class="form-horizontal justify-content-center" action="/admin/<% if (editing) { %>edit-product<% } else { %>add-product<% } %>" method="POST">
                         <fieldset>
