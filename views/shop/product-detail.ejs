@@ -1,23 +1,174 @@
 <%- include('../includes/head.ejs') %>
-
+<style>
+body {
+    background-color: #eee;
+}
+.dropright .dropdown-toggle::after {
+    float: right;
+    margin-top: 0.450em;
+}
+</style>
 </head>
 
 <body>
     <%- include('../includes/navigation.ejs') %>
+    <div class="container" style="margin-bottom: 100px;">
 
-    <div class="container-fluid bg-light py-3">
-        <div class="row">
-            <div class="col-md-8 mx-auto">
-                <div class="card card-body">
-                    <img class="card-img-top" src="<%= product.imageUrl %>"  alt="<%= product.name %>">
-                   <h1><%= product.name %><span class="badge   badge-dark " style="font-size: 50%"><%= product.productType %></span></h1> 
-                   <h3><span class="badge badge-pill  badge-warning ">DZD<%= product.price %></span></h3>
-                   <hr>
-                   <p><%= product.description %> </p>
-                <%- include('../includes/add-to-wishlist.ejs') %>
-                </div>
+      <div class="row">
+
+        <div class="col-lg-3">
+
+        <h1 class="my-4">Categories</h1>
+        <hr>
+        <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Toggle first element</a>
+        <ul class="nav flex-column collapse multi-collapse" id="multiCollapseExample1">
+          <li class="nav-item dropright">
+            <button class=" btn  btn-light btn-block text-left dropdown-toggle" href="#" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+              style=" color: black;"><i class="fas fa-mobile-alt"></i> Phones</button>
+            <div class="dropdown-menu shadow">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
             </div>
+          </li>
+          <li class="nav-item dropright">
+            <button class=" btn  btn-light btn-block text-left dropdown-toggle" href="#" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+              style=" color: black;"><i class="fas fa-car"></i> Vhicles</button>
+            <div class="dropdown-menu shadow">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+          <li class="nav-item dropright">
+            <button class=" btn  btn-light btn-block text-left dropdown-toggle" href="#" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+              style=" color: black;"><i class="fas fa-home"></i> Real estate</button>
+            <div class="dropdown-menu shadow">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+          <li class="nav-item dropright">
+            <button class=" btn  btn-light btn-block text-left dropdown-toggle" href="#" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+              style=" color: black;"><i class="fas fa-camera"></i> Electronics </button>
+            <div class="dropdown-menu shadow">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+          <li class="nav-item dropright">
+            <button class=" btn  btn-light btn-block text-left dropdown-toggle" href="#" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+              style=" color: black;"><i class="fas fa-user-md"></i> Jobs</button>
+            <div class="dropdown-menu shadow">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+          <li class="nav-item dropright">
+            <button class=" btn  btn-light btn-block text-left dropdown-toggle" href="#" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+              style=" color: black;"><i class="fas fa-desktop"></i> Computers & Accessories</button>
+            <div class="dropdown-menu shadow">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+          <li class="nav-item dropright">
+            <button class=" btn  btn-light btn-block text-left dropdown-toggle" href="#" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+              style=" color: black;"><i class="fas fa-tshirt"></i> Beauty & Fashion</button>
+            <div class="dropdown-menu shadow">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+          <li class="nav-item dropright">
+            <button class=" btn  btn-light btn-block text-left dropdown-toggle" href="#" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+              style=" color: black;"><i class="fas fa-toolbox"></i> Services</button>
+            <div class="dropdown-menu shadow">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+          <li class="nav-item dropright">
+            <button class=" btn  btn-light btn-block text-left dropdown-toggle" href="#" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+              style=" color: black;"><i class="fas fa-plane"></i> Travel</button>
+            <div class="dropdown-menu shadow">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+          <li class="nav-item dropright">
+            <button class=" btn  btn-light btn-block text-left dropdown-toggle" href="#" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+              style=" color: black;"><i class="fas fa-chair"></i> Home & Fournitures</button>
+            <div class="dropdown-menu shadow">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+          <li class="nav-item dropright">
+            <button class=" btn  btn-light btn-block text-left dropdown-toggle" href="#" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+              style=" color: black;"><i class="fas fa-hiking"></i> Hobbies & Entertainment</button>
+            <div class="dropdown-menu shadow">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+          <li class="nav-item dropright">
+            <button class=" btn  btn-light btn-block text-left dropdown-toggle" href="#" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+              style=" color: black;"><i class="fas fa-cog"></i> Materials & Equipment</button>
+            <div class="dropdown-menu shadow">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+          <li class="nav-item dropright">
+            <button class=" btn  btn-light btn-block text-left  dropdown-toggle" href="#" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+              style=" color: black;"><i class="fas fa-gift"></i> Various</button>
+            <div class="dropdown-menu shadow">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+          <li class="nav-item dropright">
+            <button class=" btn  btn-light btn-block text-left  dropdown-toggle" href="#" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+              style=" color: black;"><i class="fas fa-store-alt"></i> Stores</button>
+            <div class="dropdown-menu shadow">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+        </ul>
+
+      </div>
+        <!-- /.col-lg-3 -->
+
+        <div class="col-lg-9">
+
+          <div class="card mt-4">
+            <img class="card-img-top img-fluid"  style=" width: 900px; height: 400px; object-fit: cover;" src="<%= product.imageUrl %>" alt="<%= product.name %>">
+            <div class="card-body">
+              <h3 class="card-title"><%= product.name %> <span class="badge   badge-dark " style="font-size: 50%"><%= product.productType %></span></h3>
+              <h4><span class="badge badge-pill  badge-warning ">DZD<%= product.price %></span></h4>
+              <p class="card-text"><%= product.description %></p>
+               <%- include('../includes/add-to-wishlist.ejs') %>  
+            </div>
+          </div>
         </div>
+        <!-- /.col-lg-9 -->
+
+      </div>
+
     </div>
 <%- include('../includes/footer.ejs') %> 
     <%- include('../includes/end.ejs') %> 
