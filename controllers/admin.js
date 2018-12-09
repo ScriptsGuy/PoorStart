@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-param-reassign */
 /* eslint-disable prefer-destructuring */
 const Product = require('../models/product');
 
@@ -15,18 +17,17 @@ exports.postAddProduct = (req, res, next) => {
   const imageUrl = req.body.imageUrl;
   const productType = req.body.productType;
   const description = req.body.description;
-  const product = new Product(
-    null,
-    name,
-    price,
-    imageUrl,
-    productType,
-    // eslint-disable-next-line comma-dangle
-    description
-  );
+  const product = new Product({
+    name, price, imageUrl, productType, description, userId: req.user,
+  });
   // console.log(product);
-  product.save();
-  res.redirect('/');
+  product.save()
+    .then((result) => {
+      console.log('Created Product!!');
+      res.redirect('/admin/products');
+    }).catch((err) => {
+      console.log(err);
+    });
 };
 
 exports.getEditProduct = (req, res, next) => {
@@ -36,7 +37,7 @@ exports.getEditProduct = (req, res, next) => {
     return res.redirect('/');
   }
   const prodId = req.params.productId;
-  Product.findById(prodId, (product) => {
+  Product.findById(prodId).then((product) => {
     if (!product) {
       return res.redirect('/');
     }
@@ -47,9 +48,9 @@ exports.getEditProduct = (req, res, next) => {
       // eslint-disable-next-line object-shorthand
       product: product,
     });
-    return true;
+  }).catch((err) => {
+    console.log(err);
   });
-  return true;
 };
 exports.postEditProduct = (req, res, next) => {
   const prodId = req.body.productId;
@@ -58,32 +59,43 @@ exports.postEditProduct = (req, res, next) => {
   const updatedImageUrl = req.body.imageUrl;
   const updatedProductType = req.body.productType;
   const updatedDescription = req.body.description;
-  const updatedProduct = new Product(
-    prodId,
-    updatedName,
-    updatedPrice,
-    updatedImageUrl,
-    updatedProductType,
-    // eslint-disable-next-line comma-dangle
-    updatedDescription
-  );
-  updatedProduct.save();
-  res.redirect('/admin/products');
+
+  Product.findById(prodId)
+    .then((product) => {
+      product.name = updatedName;
+      product.price = updatedPrice;
+      product.imageUrl = updatedImageUrl;
+      product.productType = updatedProductType;
+      product.description = updatedDescription;
+      return product.save();
+    })
+    .then((result) => {
+      console.log('updates product!!');
+      res.redirect('/admin/products');
+    }).catch((err) => {
+      console.log(err);
+    });
 };
 
 exports.getProducts = (req, res, next) => {
   // eslint-disable-next-line prefer-destructuring
-  Product.fetchAll((products) => {
+  Product.find().then((products) => {
     res.render('admin/products', {
       prods: products,
       pageTitle: 'admin products',
       path: '/admin/products',
     });
+  }).catch((err) => {
+    console.log(err);
   });
 };
 
 exports.postDeleteProduct = (req, res) => {
   const prodId = req.body.productId;
-  Product.deleteById(prodId);
-  res.redirect('/');
+  Product.findByIdAndRemove(prodId).then(() => {
+    console.log('destroyed product');
+    res.redirect('/admin/products');
+  }).catch((err) => {
+    console.log(err);
+  });
 };

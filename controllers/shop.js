@@ -3,38 +3,43 @@ const WishList = require('../models/wishlist');
 
 exports.getProducts = (req, res, next) => {
   // eslint-disable-next-line prefer-destructuring
-  Product.fetchAll((products) => {
-    // console.log(products);
+  Product.find().then((products) => {
+    console.log(products);
     res.render('shop/product-list', {
       prods: products,
       pageTitle: 'all products',
       path: '/products',
     });
+  }).catch((err) => {
+    console.log(err);
   });
 };
 
 exports.getProduct = (req, res) => {
   const prodId = req.params.productId;
-  Product.findById(prodId, (product) => {
+  Product.findById(prodId).then((product) => {
     res.render('shop/product-detail', {
       // eslint-disable-next-line object-shorthand
       product: product,
       pageTitle: product.name,
       path: '/products',
     });
+  }).catch((err) => {
+    console.log(err);
   });
 };
 
 
 exports.getIndex = (req, res, next) => {
   // eslint-disable-next-line prefer-destructuring
-  Product.fetchAll((products) => {
-    // console.log(products);
+  Product.find().then((products) => {
     res.render('shop/index', {
       prods: products,
       pageTitle: 'Shop',
       path: '/',
     });
+  }).catch((err) => {
+    console.log(err);
   });
 };
 
