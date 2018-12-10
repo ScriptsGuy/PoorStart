@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 const mongoose = require('mongoose');
 
 // eslint-disable-next-line prefer-destructuring
@@ -21,6 +22,30 @@ const userSchema = new Schema({
   },
 });
 
+userSchema.methods.addToWishList = function (product) {
+  const WishListProductIndex = this.wishList.items.findIndex((cp) => cp.productId.toString() === product._id.toString());
+  const updatedWishListItems = [...this.wishList.items];
+
+  if (WishListProductIndex >= 0) {
+    console.log('this wish is already fullfilled!!');
+  } else {
+    updatedWishListItems.push({
+      productId: product._id,
+    });
+  }
+  const updatedWishList = {
+    items: updatedWishListItems,
+  };
+  this.wishList = updatedWishList;
+  return this.save();
+};
+
+userSchema.methods.removeWishList = function (productId) {
+  const updatedProduct = this.wishList.items.filter((item) => item.productId.toString() !== productId.toString());
+  this.wishList.items = updatedProduct;
+  return this.save();
+};
+
 module.exports = mongoose.model('User', userSchema);
 
 
@@ -33,7 +58,7 @@ module.exports = mongoose.model('User', userSchema);
 //   'wishList.json',
 // );
 
-// module.exports = class Cart {
+// module.exports = class WishList {
 //   static addProduct(id, productPrice) {
 //     // Fetch the previous wishList
 //     fs.readFile(p, (err, fileContent) => {
@@ -67,16 +92,16 @@ module.exports = mongoose.model('User', userSchema);
 //       if (err) {
 //         return;
 //       }
-//       const updatedCart = { ...JSON.parse(fileContent) };
-//       const product = updatedCart.products.find((prod) => prod.id === id);
+//       const updatedWishList = { ...JSON.parse(fileContent) };
+//       const product = updatedWishList.products.find((prod) => prod.id === id);
 //       if (!product) {
 //         return;
 //       }
 //       const productQty = product.qty;
-//       updatedCart.products = updatedCart.products.filter((prod) => prod.id !== id);
-//       updatedCart.totalPrice -= productPrice * productQty;
+//       updatedWishList.products = updatedWishList.products.filter((prod) => prod.id !== id);
+//       updatedWishList.totalPrice -= productPrice * productQty;
 
-//       fs.writeFile(p, JSON.stringify(updatedCart), (err) => {
+//       fs.writeFile(p, JSON.stringify(updatedWishList), (err) => {
 //         console.log(err);
 //       });
 //     });

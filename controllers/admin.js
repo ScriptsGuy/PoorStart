@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-param-reassign */
 /* eslint-disable prefer-destructuring */
+const colors = require('colors');
 const Product = require('../models/product');
 
 exports.getAddProduct = (req, res, next) => {
@@ -8,6 +9,7 @@ exports.getAddProduct = (req, res, next) => {
     pageTitle: 'Add Product',
     path: '/admin/add-product',
     editing: false,
+    isAuthenticated: req.session.isLoggedIn,
   });
 };
 
@@ -23,7 +25,7 @@ exports.postAddProduct = (req, res, next) => {
   // console.log(product);
   product.save()
     .then((result) => {
-      console.log('Created Product!!');
+      console.log('Created Product!!'.bgCyan.black);
       res.redirect('/admin/products');
     }).catch((err) => {
       console.log(err);
@@ -47,6 +49,7 @@ exports.getEditProduct = (req, res, next) => {
       editing: editMode,
       // eslint-disable-next-line object-shorthand
       product: product,
+      isAuthenticated: req.session.isLoggedIn,
     });
   }).catch((err) => {
     console.log(err);
@@ -84,6 +87,7 @@ exports.getProducts = (req, res, next) => {
       prods: products,
       pageTitle: 'admin products',
       path: '/admin/products',
+      isAuthenticated: req.session.isLoggedIn,
     });
   }).catch((err) => {
     console.log(err);
@@ -93,7 +97,7 @@ exports.getProducts = (req, res, next) => {
 exports.postDeleteProduct = (req, res) => {
   const prodId = req.body.productId;
   Product.findByIdAndRemove(prodId).then(() => {
-    console.log('destroyed product');
+    console.log('destroyed product'.bgRed.black.bold);
     res.redirect('/admin/products');
   }).catch((err) => {
     console.log(err);

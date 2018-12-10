@@ -4,11 +4,12 @@ const WishList = require('../models/wishlist');
 exports.getProducts = (req, res, next) => {
   // eslint-disable-next-line prefer-destructuring
   Product.find().then((products) => {
-    console.log(products);
+    console.log(products.toString().bgWhite.black);
     res.render('shop/product-list', {
       prods: products,
       pageTitle: 'all products',
       path: '/products',
+      isAuthenticated: req.session.isLoggedIn,
     });
   }).catch((err) => {
     console.log(err);
@@ -23,6 +24,7 @@ exports.getProduct = (req, res) => {
       product: product,
       pageTitle: product.name,
       path: '/products',
+      isAuthenticated: req.session.isLoggedIn,
     });
   }).catch((err) => {
     console.log(err);
@@ -37,6 +39,7 @@ exports.getIndex = (req, res, next) => {
       prods: products,
       pageTitle: 'Shop',
       path: '/',
+      isAuthenticated: req.session.isLoggedIn,
     });
   }).catch((err) => {
     console.log(err);
@@ -44,38 +47,44 @@ exports.getIndex = (req, res, next) => {
 };
 
 exports.getWishlist = (req, res, next) => {
-  WishList.getWishList((wishList) => {
-    Product.fetchAll((products) => {
-      const cartProducts = [];
-      for (product of products) {
-        const cartProductData = wishList.products.find((prod) => prod.id === product.id);
-        if (cartProductData) {
-          cartProducts.push({ productData: product, qty: cartProductData.qty });
-        }
-      }
+  req.user
+    .populate('wishList.items.productId')
+    .execPopulate()
+    .then((user) => {
+      console.log(user.wishList.items);
+      const products = user.wishList.items;
       res.render('shop/wishlist', {
-        path: '/wishList',
-        pageTitle: 'Your Cart',
-        products: cartProducts,
+        path: '/wishlist',
+        pageTitle: 'Your WishList',
+        products,
+        isAuthenticated: req.session.isLoggedIn,
       });
+    })
+    .catch((err) => {
+      console.log(err);
     });
-  });
 };
 
-exports.postWishList = (req, res) => {
+exports.postWishList = (req, res, next) => {
   const prodId = req.body.productId;
-  Product.findById(prodId, (product) => {
-    WishList.addProduct(prodId, product.price);
-  });
-  res.redirect('/wishlist');
+  Product.findById(prodId)
+    .then((product) => req.user.addToWishList(product))
+    .then((result) => {
+      console.log(result);
+      res.redirect('/wishlist');
+    });
 };
 
 exports.postWishListDelete = (req, res, next) => {
   const prodId = req.body.productId;
-  Product.findById(prodId, (product) => {
-    WishList.deleteProduct(prodId, product.price);
-    res.redirect('/wishlist');
-  });
+  req.user
+    .removeWishList(prodId)
+    .then((result) => {
+      res.redirect('/wishlist');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 exports.getOrders = (req, res, next) => {

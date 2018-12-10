@@ -21,24 +21,24 @@
       <% products.forEach(p => { %>
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="card h-100 shadow">
-          <a href="#"><img style=" width: 100%; height: 200px; object-fit: cover;" class="card-img-top" src="<%= p.productData.imageUrl %>"
-              alt="<%= product.name %>"></a>
+          <a href="#"><img style=" width: 100%; height: 200px; object-fit: cover;" class="card-img-top" src="<%= p.productId.imageUrl %>"
+              alt="<%= p.productId.name %>"></a>
           <div class="card-body">
             <h4 class="card-title">
-              <%= p.productData.name %>
+              <%= p.productId.name %>
             </h4>
             <h5>
               <span class="badge badge-pill  badge-warning ">DZD
-                <%= p.productData.price %></span>
+                <%= p.productId.price %></span>
             </h5>
             <!-- <p class="card-text" style=" height: 100px;">
-                      <%= p.productData.description %>
+                      <%= p.productId.description %>
                     </p> -->
             <form action="/cart-delete-item" method="POST">
               <div class="row">
 
-                <div class="col-xs-4"><a href="/products/<%= p.productData.id %>" class="btn btn-info">Details</a></div>
-                <input type="hidden" value="<%= p.productData.id %>" name="productId">
+                <div class="col-xs-4"><a href="/products/<%= p.productId.id %>" class="btn btn-info">Details</a></div>
+                <input type="hidden" value="<%= p.productId.id %>" name="productId">
                 <div class="col-xs-4"></div><button class="btn btn-danger" style="margin-left: 7px;" type="submit">Delete</button>
 
               </div>
@@ -46,7 +46,7 @@
           </div>
           <div class="card-footer">
             <small class="">
-              <%= p.productData.productType %></small>
+              <%= p.productId.productType %></small>
           </div>
         </div>
 
