@@ -5,11 +5,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  name: {
+  email: {
     type: String,
     required: true,
   },
-  email: {
+  password: {
     type: String,
     required: true,
   },
@@ -23,6 +23,7 @@ const userSchema = new Schema({
 });
 
 userSchema.methods.addToWishList = function (product) {
+  // eslint-disable-next-line no-underscore-dangle
   const WishListProductIndex = this.wishList.items.findIndex((cp) => cp.productId.toString() === product._id.toString());
   const updatedWishListItems = [...this.wishList.items];
 
@@ -30,6 +31,7 @@ userSchema.methods.addToWishList = function (product) {
     console.log('this wish is already fullfilled!!');
   } else {
     updatedWishListItems.push({
+      // eslint-disable-next-line no-underscore-dangle
       productId: product._id,
     });
   }
@@ -41,7 +43,10 @@ userSchema.methods.addToWishList = function (product) {
 };
 
 userSchema.methods.removeWishList = function (productId) {
-  const updatedProduct = this.wishList.items.filter((item) => item.productId.toString() !== productId.toString());
+  // eslint-disable-next-line arrow-body-style
+  const updatedProduct = this.wishList.items.filter((item) => {
+    return item.productId.toString() !== productId.toString();
+  });
   this.wishList.items = updatedProduct;
   return this.save();
 };

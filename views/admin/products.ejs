@@ -1,4 +1,5 @@
 <%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/global.css" />
 
 </head>
 
@@ -24,6 +25,8 @@
                 </p> -->
                 <hr>
                 <form method="POST" action="/admin/delete-product" style="margin-left: 15px;">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
                   <div class="row">
                     <div class="col-xs-4"><a href="/admin/edit-product/<%= product.id %>?edit=true" class="btn btn-success">Edit</a></div>
                     <div class="col-xs-4" style="padding-left: 7px;"><input type="hidden" value="<%= product.id %>"

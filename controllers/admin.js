@@ -3,6 +3,8 @@
 /* eslint-disable prefer-destructuring */
 const colors = require('colors');
 const Product = require('../models/product');
+const WishList = require('../models/wishlist');
+
 
 exports.getAddProduct = (req, res, next) => {
   res.render('admin/edit-product', {
@@ -98,6 +100,14 @@ exports.postDeleteProduct = (req, res) => {
   const prodId = req.body.productId;
   Product.findByIdAndRemove(prodId).then(() => {
     console.log('destroyed product'.bgRed.black.bold);
+    req.user
+      .removeWishList(prodId)
+      .then((result) => {
+        console.log('removed from wishlist'.red);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     res.redirect('/admin/products');
   }).catch((err) => {
     console.log(err);

@@ -1,4 +1,5 @@
 <%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/global.css" />
 
 <style>
 
@@ -21,7 +22,7 @@
       <% products.forEach(p => { %>
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="card h-100 shadow">
-          <a href="#"><img style=" width: 100%; height: 200px; object-fit: cover;" class="card-img-top" src="<%= p.productId.imageUrl %>"
+         <a href="#"><img style=" width: 100%; height: 200px; object-fit: cover;" class="card-img-top" src="<%= p.productId.imageUrl %>"
               alt="<%= p.productId.name %>"></a>
           <div class="card-body">
             <h4 class="card-title">
@@ -35,6 +36,8 @@
                       <%= p.productId.description %>
                     </p> -->
             <form action="/cart-delete-item" method="POST">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
               <div class="row">
 
                 <div class="col-xs-4"><a href="/products/<%= p.productId.id %>" class="btn btn-info">Details</a></div>

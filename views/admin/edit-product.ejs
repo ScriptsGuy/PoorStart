@@ -1,4 +1,5 @@
 <%- include('../includes/head.ejs') %> 
+<link rel="stylesheet" href="/css/global.css" />
 </head>
   <style>
     .mtopbottom{
@@ -15,6 +16,8 @@
                 <div class="card card-body shadow">
                     <h3 class="text-center mb-4">Add Product</h3>
                     <form class="form-horizontal justify-content-center" action="/admin/<% if (editing) { %>edit-product<% } else { %>add-product<% } %>" method="POST">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
                         <fieldset>
                             <div class="form-group">
                                 <label class="" for="Name">Name</label>

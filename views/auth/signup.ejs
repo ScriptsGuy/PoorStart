@@ -10,15 +10,15 @@
             <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
                 <div class="card card-signin my-5">
                     <div class="card-body shadow">
-                        <h5 class="card-title text-center">Sign In</h5>
+                        <h5 class="card-title text-center">Sign up</h5>
                         <% if (errorMessage) { %>
                         
-                        <div class="alert alert-danger" role="alert">
+                        <div class="alert alert-info" role="alert">
                             <%= errorMessage %> 
                         </div>
                         <% } %>
-                        <form class="form-signin" action="/login" method="POST">
-                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <form class="form-signin" action="/signup" method="POST">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
                             <div class="form-label-group">
                                 <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address"
@@ -32,14 +32,19 @@
                                 <!-- <label for="inputPassword">Password</label> -->
                             </div>
 
+                            <div class="form-label-group">
+                                <input type="password" style="margin-top: 20px;" name="confirmPassword" id="inputPassword"
+                                    class="form-control" placeholder="Confirm Password">
+                                <!-- <label for="inputPassword">Password</label> -->
+                            </div>
+
                             <div class="custom-control custom-checkbox mb-3">
                                 <input style="margin-top: 20px;" type="checkbox" class="custom-control-input" id="customCheck1">
                                 <label style="margin-top: 20px;" class="custom-control-label" for="customCheck1">Remember
                                     password</label>
-                                    <a href="/reset" style="margin-left: 106px;">reset password</a>
                             </div>
                             <button style="margin-top: 20px;" class="btn btn-lg btn-primary btn-block text-uppercase"
-                                type="submit">Sign in</button>
+                                type="submit">Sign up</button>
                         </form>
                     </div>
                 </div>

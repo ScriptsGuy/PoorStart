@@ -1,4 +1,5 @@
 <%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/global.css" />
 <style>
   body {
     background-color: #eee;
@@ -35,8 +36,10 @@
 
       <div class="col-lg-3">
 
+        <% if (!isAuthenticated) { %>
         <h1 class="my-4">Categories</h1>
         <hr>
+        
         <ul class="nav flex-column">
           <li class="nav-item dropright">
             <button class=" btn  btn-light btn-block text-left dropdown-toggle" href="#" type="button" id="dropdownMenuButton"
@@ -165,10 +168,11 @@
             </div>
           </li>
         </ul>
+        <% } %>
 
 
 
-
+        
       </div>
       <!-- /.col-lg-3 -->
 

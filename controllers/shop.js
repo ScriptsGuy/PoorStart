@@ -40,6 +40,7 @@ exports.getIndex = (req, res, next) => {
       pageTitle: 'Shop',
       path: '/',
       isAuthenticated: req.session.isLoggedIn,
+      csrfToken: req.csrfToken(),
     });
   }).catch((err) => {
     console.log(err);
@@ -56,7 +57,8 @@ exports.getWishlist = (req, res, next) => {
       res.render('shop/wishlist', {
         path: '/wishlist',
         pageTitle: 'Your WishList',
-        products,
+        // eslint-disable-next-line object-shorthand
+        products: products,
         isAuthenticated: req.session.isLoggedIn,
       });
     })

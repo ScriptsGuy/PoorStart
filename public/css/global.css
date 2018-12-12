@@ -1,0 +1,15 @@
+.form-inline{
+  width: 100%;
+
+    margin-right: 100px;
+
+  justify-content: center;
+}
+.mainInput{
+
+    padding-right: 261px;
+
+}
+.form-inline #search{
+  width: 50%;
+}
