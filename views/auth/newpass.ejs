@@ -1,0 +1,50 @@
+<%- include('../includes/head.ejs') %>
+<!-- <link rel="stylesheet" href="/css/form.css" /> -->
+<link rel="stylesheet" href="/css/global.css" />
+</head>
+
+<body>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                <div class="card card-signin my-5">
+                    <div class="card-body shadow">
+                        <h5 class="card-title text-center">Reset Password</h5>
+                        <% if (errorMessage) { %>
+                        
+                        <div class="alert alert-info" role="alert">
+                            <%= errorMessage %> 
+                        </div>
+                        <% } %>
+                        <form class="form-signin" action="/new-password" method="POST">
+                            <input type="hidden" name="userId" value="<%= userId %>">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <input type="hidden" name="passwordToken" value="<%= passwordToken %>">
+
+                            
+                            <div class="form-label-group">
+                                <input type="password" style="margin-top: 20px;" name="password" id="inputPassword"
+                                    class="form-control" placeholder="Password">
+                                <!-- <label for="inputPassword">Password</label> -->
+                            </div>
+
+                            <div class="form-label-group">
+                                <input type="password" style="margin-top: 20px;" name="confirmPassword" id="inputPassword"
+                                    class="form-control" placeholder="Confirm Password">
+                                <!-- <label for="inputPassword">Password</label> -->
+                            </div>
+
+                            
+                            <button style="margin-top: 20px;" class="btn btn-lg btn-primary btn-block text-uppercase"
+                                type="submit">Update Password</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+<%- include('../includes/end.ejs') %>

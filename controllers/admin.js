@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable consistent-return */
 /* eslint-disable no-param-reassign */
 /* eslint-disable prefer-destructuring */
@@ -11,7 +12,7 @@ exports.getAddProduct = (req, res, next) => {
     pageTitle: 'Add Product',
     path: '/admin/add-product',
     editing: false,
-    isAuthenticated: req.session.isLoggedIn,
+
   });
 };
 
@@ -51,7 +52,7 @@ exports.getEditProduct = (req, res, next) => {
       editing: editMode,
       // eslint-disable-next-line object-shorthand
       product: product,
-      isAuthenticated: req.session.isLoggedIn,
+
     });
   }).catch((err) => {
     console.log(err);
@@ -67,29 +68,33 @@ exports.postEditProduct = (req, res, next) => {
 
   Product.findById(prodId)
     .then((product) => {
+      if (product.userId.toString() !== req.user._id.toString()) {
+        return res.redirect('/');
+      }
       product.name = updatedName;
       product.price = updatedPrice;
       product.imageUrl = updatedImageUrl;
       product.productType = updatedProductType;
       product.description = updatedDescription;
-      return product.save();
+      return product.save().then((result) => {
+        console.log('updates product!!');
+        res.redirect('/admin/products');
+      });
     })
-    .then((result) => {
-      console.log('updates product!!');
-      res.redirect('/admin/products');
-    }).catch((err) => {
+    .catch((err) => {
       console.log(err);
     });
 };
 
 exports.getProducts = (req, res, next) => {
   // eslint-disable-next-line prefer-destructuring
-  Product.find().then((products) => {
+  // eslint-disable-next-line no-underscore-dangle
+  Product.find({ userId: req.user._id }).then((products) => {
     res.render('admin/products', {
       prods: products,
       pageTitle: 'admin products',
       path: '/admin/products',
-      isAuthenticated: req.session.isLoggedIn,
+
     });
   }).catch((err) => {
     console.log(err);
@@ -98,7 +103,7 @@ exports.getProducts = (req, res, next) => {
 
 exports.postDeleteProduct = (req, res) => {
   const prodId = req.body.productId;
-  Product.findByIdAndRemove(prodId).then(() => {
+  Product.deleteOne({ _id: prodId, userId: req.user._id }).then(() => {
     console.log('destroyed product'.bgRed.black.bold);
     req.user
       .removeWishList(prodId)
