@@ -17,18 +17,18 @@
                             <%= errorMessage %> 
                         </div>
                         <% } %>
-                        <form class="form-signin" action="/login" method="POST">
+                        <form class="form-signin" action="/login" method="POST" >
                                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
                             <div class="form-label-group">
-                                <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address"
+                                <input type="email" name="email" value="<%= oldInput.email %>" id="inputEmail" class="form-control <%= validationErrors.find(e => e.param ===  'email') ? 'is-invalid' : '' %>" placeholder="Email address"
                                     autofocus>
                                 <!-- <label for="inputEmail">Email address</label> -->
                             </div>
 
                             <div class="form-label-group">
-                                <input type="password" style="margin-top: 20px;" name="password" id="inputPassword"
-                                    class="form-control" placeholder="Password">
+                                <input type="password" style="margin-top: 20px;" value="<%= oldInput.password %>" name="password" id="inputPassword"
+                                    class="form-control <%= validationErrors.find(e => e.param ===  'password') ? 'is-invalid' : '' %>" placeholder="Password">
                                 <!-- <label for="inputPassword">Password</label> -->
                             </div>
 

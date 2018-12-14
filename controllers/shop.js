@@ -3,48 +3,53 @@ const WishList = require('../models/wishlist');
 
 exports.getProducts = (req, res, next) => {
   // eslint-disable-next-line prefer-destructuring
-  Product.find().then((products) => {
-    console.log(products.toString().bgWhite.black);
-    res.render('shop/product-list', {
-      prods: products,
-      pageTitle: 'all products',
-      path: '/products',
-      isAuthenticated: req.session.isLoggedIn,
+  Product.find()
+    .then((products) => {
+      console.log(products.toString().bgWhite.black);
+      res.render('shop/product-list', {
+        prods: products,
+        pageTitle: 'all products',
+        path: '/products',
+        isAuthenticated: req.session.isLoggedIn
+      });
+    })
+    .catch((err) => {
+      console.log(err);
     });
-  }).catch((err) => {
-    console.log(err);
-  });
 };
 
 exports.getProduct = (req, res) => {
   const prodId = req.params.productId;
-  Product.findById(prodId).then((product) => {
-    res.render('shop/product-detail', {
-      // eslint-disable-next-line object-shorthand
-      product: product,
-      pageTitle: product.name,
-      path: '/products',
-      isAuthenticated: req.session.isLoggedIn,
+  Product.findById(prodId)
+    .then((product) => {
+      res.render('shop/product-detail', {
+        // eslint-disable-next-line object-shorthand
+        product: product,
+        pageTitle: product.name,
+        path: '/products',
+        isAuthenticated: req.session.isLoggedIn
+      });
+    })
+    .catch((err) => {
+      console.log(err);
     });
-  }).catch((err) => {
-    console.log(err);
-  });
 };
-
 
 exports.getIndex = (req, res, next) => {
   // eslint-disable-next-line prefer-destructuring
-  Product.find().then((products) => {
-    res.render('shop/index', {
-      prods: products,
-      pageTitle: 'Shop',
-      path: '/',
-      isAuthenticated: req.session.isLoggedIn,
-      csrfToken: req.csrfToken(),
+  Product.find()
+    .then((products) => {
+      res.render('shop/index', {
+        prods: products,
+        pageTitle: 'Shop',
+        path: '/',
+        isAuthenticated: req.session.isLoggedIn,
+        csrfToken: req.csrfToken()
+      });
+    })
+    .catch((err) => {
+      console.log(err);
     });
-  }).catch((err) => {
-    console.log(err);
-  });
 };
 
 exports.getWishlist = (req, res, next) => {
@@ -59,7 +64,7 @@ exports.getWishlist = (req, res, next) => {
         pageTitle: 'Your WishList',
         // eslint-disable-next-line object-shorthand
         products: products,
-        isAuthenticated: req.session.isLoggedIn,
+        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch((err) => {
@@ -92,13 +97,13 @@ exports.postWishListDelete = (req, res, next) => {
 exports.getOrders = (req, res, next) => {
   res.render('shop/orders', {
     path: '/orders',
-    pageTitle: 'Your Orders',
+    pageTitle: 'Your Orders'
   });
 };
 
 exports.getcheckout = (req, res) => {
   res.render('shop/checkout', {
     pageTitle: 'Checkout',
-    path: '/checkout',
+    path: '/checkout'
   });
 };

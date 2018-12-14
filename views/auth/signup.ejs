@@ -13,28 +13,33 @@
                         <h5 class="card-title text-center">Sign up</h5>
                         <% if (errorMessage) { %>
                         
-                        <div class="alert alert-info" role="alert">
+                        <div class="alert alert-danger" role="alert">
                             <%= errorMessage %> 
                         </div>
                         <% } %>
-                        <form class="form-signin" action="/signup" method="POST">
+                        <form class="form-signin" action="/signup" method="POST" novalidate>
                             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
                             <div class="form-label-group">
-                                <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address"
-                                    autofocus>
+                                <input 
+                                type="email" 
+                                name="email" 
+                                id="inputEmail" 
+                                class="form-control <%= validationErrors.find(e => e.param ===  'email') ? 'is-invalid' : '' %>" 
+                                placeholder="Email address"
+                                autofocus value="<%= oldInput.email %>" >
                                 <!-- <label for="inputEmail">Email address</label> -->
                             </div>
 
                             <div class="form-label-group">
                                 <input type="password" style="margin-top: 20px;" name="password" id="inputPassword"
-                                    class="form-control" placeholder="Password">
+                                    class="form-control <%= validationErrors.find(e => e.param ===  'password') ? 'is-invalid' : '' %>" placeholder="Password" value="<%= oldInput.password %>">
                                 <!-- <label for="inputPassword">Password</label> -->
                             </div>
 
                             <div class="form-label-group">
                                 <input type="password" style="margin-top: 20px;" name="confirmPassword" id="inputPassword"
-                                    class="form-control" placeholder="Confirm Password">
+                                    class="form-control <%= validationErrors.find(e => e.param ===  'confirmPassword') ? 'is-invalid' : '' %>" placeholder="Confirm Password" value="<%= oldInput.confirmPassword %>">
                                 <!-- <label for="inputPassword">Password</label> -->
                             </div>
 
