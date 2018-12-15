@@ -5,13 +5,17 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
+  userName: {
+    type: String,
+    required: true
+  },
   email: {
     type: String,
-    required: true,
+    required: true
   },
   password: {
     type: String,
-    required: true,
+    required: true
   },
   resetToken: String,
   resetTokenExpiration: Date,
@@ -19,15 +23,17 @@ const userSchema = new Schema({
   wishList: {
     items: [
       {
-        productId: { type: Schema.Types.ObjectId, ref: 'Product', required: true },
-      },
-    ],
-  },
+        productId: { type: Schema.Types.ObjectId, ref: 'Product', required: true }
+      }
+    ]
+  }
 });
 
-userSchema.methods.addToWishList = function (product) {
-  // eslint-disable-next-line no-underscore-dangle
-  const WishListProductIndex = this.wishList.items.findIndex((cp) => cp.productId.toString() === product._id.toString());
+userSchema.methods.addToWishList = function(product) {
+  const WishListProductIndex = this.wishList.items.findIndex(
+    // eslint-disable-next-line no-underscore-dangle
+    (cp) => cp.productId.toString() === product._id.toString()
+  );
   const updatedWishListItems = [...this.wishList.items];
 
   if (WishListProductIndex >= 0) {
@@ -35,17 +41,17 @@ userSchema.methods.addToWishList = function (product) {
   } else {
     updatedWishListItems.push({
       // eslint-disable-next-line no-underscore-dangle
-      productId: product._id,
+      productId: product._id
     });
   }
   const updatedWishList = {
-    items: updatedWishListItems,
+    items: updatedWishListItems
   };
   this.wishList = updatedWishList;
   return this.save();
 };
 
-userSchema.methods.removeWishList = function (productId) {
+userSchema.methods.removeWishList = function(productId) {
   // eslint-disable-next-line arrow-body-style
   const updatedProduct = this.wishList.items.filter((item) => {
     return item.productId.toString() !== productId.toString();
@@ -55,7 +61,6 @@ userSchema.methods.removeWishList = function (productId) {
 };
 
 module.exports = mongoose.model('User', userSchema);
-
 
 // const fs = require('fs');
 // const path = require('path');

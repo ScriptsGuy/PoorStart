@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable consistent-return */
 /* eslint-disable object-shorthand */
 /* eslint-disable prefer-destructuring */
 
@@ -32,6 +34,7 @@ exports.getLogin = (req, res, next) => {
     validationErrors: []
   });
 };
+
 exports.getSignup = (req, res, next) => {
   let message = req.flash('error');
   if (message.length > 0) {
@@ -43,10 +46,11 @@ exports.getSignup = (req, res, next) => {
     pageTitle: 'Signup',
     path: '/signup',
     errorMessage: message,
-    oldInput: { email: '', password: '', confirmPassword: '' },
+    oldInput: { userName: '', email: '', password: '', confirmPassword: '' },
     validationErrors: []
   });
 };
+
 exports.postLogin = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -103,6 +107,7 @@ exports.postLogin = (req, res, next) => {
 };
 
 exports.postSignup = (req, res, next) => {
+  const userName = req.body.userName;
   const email = req.body.email;
   const password = req.body.password;
   const confirmPassword = req.body.confirmPassword;
@@ -113,7 +118,12 @@ exports.postSignup = (req, res, next) => {
       pageTitle: 'Signup',
       path: '/signup',
       errorMessage: errors.array()[0].msg,
-      oldInput: { email: email, password: password, confirmPassword: confirmPassword },
+      oldInput: {
+        userName: userName,
+        email: email,
+        password: password,
+        confirmPassword: confirmPassword
+      },
       validationErrors: errors.array()
     });
   }
@@ -122,6 +132,7 @@ exports.postSignup = (req, res, next) => {
     .hash(password, 12)
     .then((hashedPassword) => {
       const user = new User({
+        userName: userName,
         email: email,
         password: hashedPassword,
         cart: { items: [] }
@@ -187,10 +198,12 @@ exports.postReset = (req, res, next) => {
           subject: 'Password reset',
           html: `
             <p>You requested a password reset</p>
-            <p>Click this <a href="http://localhost:3000/reset/${token}">link</a> to set a new password.</p>
+            <p>Click this <a href="http://localhost:3000/reset/${token}">
+            link</a> to set a new password.</p>
           `
         });
       })
+      // eslint-disable-next-line no-shadow
       .catch((err) => {
         console.log(err);
       });

@@ -45,13 +45,31 @@
       <ul class="navbar-nav">
 
         <li class="nav-item">
-          <form method="POST" action="/logout">
+          <form id="logout" method="POST" action="/logout">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-            <button class="btn btn-outline-primary" type="submit">Logout</button>
+        
           </form>
         </li>
 
+        
+         <li class="nav-item">
+          <div class="dropdown show">
+            <a style="font-size: 14px;"  href="#" class="dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+              <i class="fa fa-cog"></i> <%= user.userName %>
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="#">My account</a>
+              <a class="dropdown-item" href="/wishlist">Wishlist</a>
+              <a class="dropdown-item" href="" onclick="document.getElementById('logout').submit(); return false;">Logout</a>
+            </div>
+          </div>
+        </li> 
+      
+          
+
       </ul>
+      
     </div>
 </nav>
 <% } %>
@@ -78,8 +96,32 @@
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
           Search
         </button>
-
       </form>
+      <% if (isAuthenticated) { %>
+      <ul class="navbar-nav">
+         <li class="nav-item">
+          <div class="dropdown show">
+            <a class="btn btn-success dropdown-toggle" href="/admin/add-product" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-plus"></i>
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="/admin/add-product">Add Product</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </div>
+        </li> 
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/products"><i style="font-size: 24px; color: white; margin-left: 20px;" class="fas fa-bell"></i></a>
+        </li>
+      </ul>
+      <% } %>
+      
+        
+
       <ul class="navbar-nav">
         <% if (!isAuthenticated) { %>
         <li class="nav-item">

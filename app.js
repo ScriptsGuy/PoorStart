@@ -9,34 +9,37 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 const flash = require('connect-flash');
 
+const app = express();
+
 const PageNotFoundController = require('./controllers/404');
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
 
-
 const User = require('./models/wishlist');
 
-
-const app = express();
-const MONGODB_URI = 'mongodb+srv://salah:DANTEjoker..93@cluster0-20wus.mongodb.net/shop?retryWrites=true';
+const MONGODB_URI =
+  'mongodb+srv://salah:DANTEjoker..93@cluster0-20wus.mongodb.net/shop?retryWrites=true';
 const mongoStore = new MongoDBStore({
   uri: MONGODB_URI,
-  collection: 'sessions',
+  collection: 'sessions'
 });
 
 const csrfProtection = csrf();
 
-
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({
-  secret: 'my secret', resave: false, saveUninitialized: false, store: mongoStore,
-}));
+app.use(
+  session({
+    secret: 'my secret',
+    resave: false,
+    saveUninitialized: false,
+    store: mongoStore
+  })
+);
 
 app.use(csrfProtection);
 app.use(flash());
@@ -58,6 +61,7 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.isLoggedIn;
   res.locals.csrfToken = req.csrfToken();
+  res.locals.user = req.user || null;
   next();
 });
 
@@ -67,11 +71,12 @@ app.use(authRoutes);
 
 app.use(PageNotFoundController.get404);
 
-mongoose.connect(MONGODB_URI)
+mongoose
+  .connect(MONGODB_URI)
   .then((result) => {
     console.log('connected!!'.bgGreen.bold);
     app.listen(3000);
-  }).catch((err) => {
+  })
+  .catch((err) => {
     console.log(err);
   });
-

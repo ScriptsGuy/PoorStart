@@ -39,6 +39,7 @@ exports.postAddProduct = (req, res, next) => {
         name,
         price,
         imageUrl,
+        productType,
         description
       },
       errorMessage: errors.array()[0].msg,

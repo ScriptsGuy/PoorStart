@@ -22,9 +22,19 @@
 
                             <div class="form-label-group">
                                 <input 
+                                type="userName" 
+                                name="userName"  
+                                class="form-control <%= validationErrors.find(e => e.param ===  'userName') ? 'is-invalid' : '' %>" 
+                                placeholder="User name"
+                                autofocus value="<%= oldInput.email %>" >
+                                <!-- <label for="inputEmail">Email address</label> -->
+                            </div>
+                            <div class="form-label-group">
+                                <input 
                                 type="email" 
                                 name="email" 
-                                id="inputEmail" 
+                                id="inputEmail"
+                                style="margin-top: 20px;" 
                                 class="form-control <%= validationErrors.find(e => e.param ===  'email') ? 'is-invalid' : '' %>" 
                                 placeholder="Email address"
                                 autofocus value="<%= oldInput.email %>" >
